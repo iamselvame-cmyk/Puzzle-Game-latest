@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Selvam’s Jigsaw Puzzle</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -10,9 +10,9 @@
   <h1>🧩 Selvam’s Jigsaw Puzzle</h1>
   <input type="file" id="imageInput" accept="image/*">
   <div class="buttons">
-    <button onclick="startPuzzle(3)">Easy</button>
-    <button onclick="startPuzzle(4)">Medium</button>
-    <button onclick="startPuzzle(6)">Hard</button>
+    <button data-size="3">Easy</button>
+    <button data-size="4">Medium</button>
+    <button data-size="6">Hard</button>
   </div>
   <div id="timer">⏱️ Time: 0s</div>
   <div id="message"></div>
