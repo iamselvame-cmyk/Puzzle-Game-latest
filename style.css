@@ -45,4 +45,16 @@ canvas {
   margin-top: 20px;
   border: 3px solid #fff;
   box-shadow: 0 0 20px #00ffe5;
+  max-width: 100%;
+  height: auto;
+  touch-action: none; /* stop the page from scrolling/zooming while dragging pieces */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
