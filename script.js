@@ -33,6 +33,11 @@ document.getElementById('imageInput').addEventListener('change', function(e){
     reader.readAsDataURL(file);
 });
 
+// Wire up difficulty buttons (no longer relies on inline onclick / global scope)
+document.querySelectorAll('.buttons button').forEach(btn => {
+    btn.addEventListener('click', () => startPuzzle(Number(btn.dataset.size)));
+});
+
 // Start puzzle
 function startPuzzle(size){
     if(!imageObj) return alert("Please upload an image first!");
@@ -130,14 +135,28 @@ canvas.addEventListener('touchend', stopDrag, {passive:false});
 // Unified drag functions
 function getXY(e){
     const rect = canvas.getBoundingClientRect();
-    let mx, my;
-    if(e.touches){
-        mx = e.touches[0].clientX - rect.left;
-        my = e.touches[0].clientY - rect.top;
+    // Canvas may be displayed smaller than its internal resolution on mobile
+    // (CSS max-width:100%), so map client coords into canvas drawing-buffer space.
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    let clientX, clientY;
+    if(e.changedTouches && e.changedTouches.length){
+        // touchend: the lifted finger is only in changedTouches, not touches
+        clientX = e.changedTouches[0].clientX;
+        clientY = e.changedTouches[0].clientY;
+    } else if(e.touches && e.touches.length){
+        // touchstart / touchmove
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
     } else {
-        mx = e.clientX - rect.left;
-        my = e.clientY - rect.top;
+        // mouse events
+        clientX = e.clientX;
+        clientY = e.clientY;
     }
+
+    const mx = (clientX - rect.left) * scaleX;
+    const my = (clientY - rect.top) * scaleY;
     return {mx,my};
 }
 
